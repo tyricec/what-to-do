@@ -1,5 +1,5 @@
 import { addTodo, editTodo, removeTodo } from '../actions';
-import todos, { getTodos } from '../reducers';
+import todos, { getTodos } from '../reducer';
 
 describe('todo', () => {
   it('should be able to add a todo', () => {

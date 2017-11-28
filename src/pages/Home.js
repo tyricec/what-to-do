@@ -1,7 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
+
 import { addTodo } from "../todo/actions";
-import { getTodos } from "../todo/reducers";
+import { getTodos } from "../todo/reducer";
+
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import TodoInput from "../components/TodoInput/TodoInput";
+import TodoList from "../components/TodoList/TodoList";
+
+const Screen = styled.div`
+  position: relative;
+  min-height: 100vh;
+`;
+
+const Container = styled.div`
+  margin: 8px;
+`;
+
+const StyledTodoInput = styled(TodoInput)`
+  background-color: #ffffff;
+  border-bottom: 1px solid #ececec;
+`;
 
 class Home extends React.Component {
   constructor(props) {
@@ -12,28 +33,31 @@ class Home extends React.Component {
     };
   }
 
-  handleChange(event) {
+  handleChange = event => {
+    console.log("here");
     this.setState({ value: event.target.value });
-  }
+  };
+
+  submitTodo = () => {
+    console.log("here");
+    this.props.dispatch(addTodo(this.state.value));
+    this.setState({ value: "" });
+  };
 
   render() {
     return (
-      <div>
-        <div className="App">
-          <input
-            onChange={evt => this.handleChange(evt)}
-            name="todo"
-            type="text"
-            placeholder="Enter next item todo"
+      <Screen>
+        <Header />
+        <Container>
+          <StyledTodoInput
+            onTextChange={this.handleChange}
+            onAdd={this.submitTodo}
+            value={this.state.value}
           />
-          <button
-            onClick={() => this.props.dispatch(addTodo(this.state.value))}
-          >
-            Add Todo
-          </button>
-          <ul>{this.props.todos.map((todo, i) => <li key={i}>{todo}</li>)}</ul>
-        </div>
-      </div>
+          <TodoList todos={this.props.todos} />
+        </Container>
+        <Footer />
+      </Screen>
     );
   }
 }
