@@ -1,23 +1,30 @@
-import { ADD_TODO, EDIT_TODO, REMOVE_TODO } from './actionTypes';
+import { ADD_TODO, EDIT_TODO, REMOVE_TODO, UPDATE_TODO } from "./actionTypes";
 
 export const addTodo = todo => ({
   payload: {
-    todo,
+    todo
   },
-  type: ADD_TODO,
+  type: ADD_TODO
 });
 
-export const editTodo = (update, index) => ({
+export const editTodo = index => ({
+  payload: {
+    index
+  },
+  type: EDIT_TODO
+});
+
+export const updateTodo = (update, index) => ({
   payload: {
     update,
-    index,
+    index
   },
-  type: EDIT_TODO,
+  type: UPDATE_TODO
 });
 
 export const removeTodo = index => ({
   payload: {
-    index,
+    index
   },
-  type: REMOVE_TODO,
+  type: REMOVE_TODO
 });

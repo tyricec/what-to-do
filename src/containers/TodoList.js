@@ -1,10 +1,12 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { removeTodo } from "../todo/actions";
+import { editTodo, removeTodo, updateTodo } from "../todo/actions";
 import { getTodos } from "../todo/reducer";
 import styled from "styled-components";
 
 import Todo from "../components/Todo/Todo";
+import TodoInput from "../components/TodoInput/TodoInput";
 
 const List = styled.ul`
   background-color: #ffffff;
@@ -14,17 +16,45 @@ const List = styled.ul`
   width: 100%;
 `;
 
-const TodoList = ({ removeTodo, todos }) => (
+const TodoList = ({ dispatch, todos }) => (
   <List>
-    {todos && todos.map((todo, idx) => <Todo key={idx} onRemove={() => removeTodo(idx)}>{todo}</Todo>)}
+    {todos &&
+      todos.map((todo, idx) => {
+        if (todo.isInEditMode) {
+          return (
+            <TodoInput
+              onSubmit={update => dispatch(updateTodo(update, idx))}
+              value={todo.value}
+            />
+          );
+        }
+        return (
+          <Todo
+            key={idx}
+            onEdit={() => dispatch(editTodo(idx))}
+            onRemove={() => dispatch(removeTodo(idx))}
+          >
+            {todo.value}
+          </Todo>
+        );
+      })}
   </List>
 );
 
-export default connect(
-  state => ({
-    todos: getTodos(state)
-  }),
-  {
-    removeTodo
-  }
-)(TodoList);
+TodoList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      isInEditMode: PropTypes.bool,
+      value: PropTypes.string.isRequired
+    })
+  )
+};
+
+TodoList.defaultProps = {
+  todos: []
+};
+
+export default connect(state => ({
+  todos: getTodos(state)
+}))(TodoList);

@@ -1,29 +1,44 @@
-import { ADD_TODO, EDIT_TODO, REMOVE_TODO } from './actionTypes';
+import { ADD_TODO, REMOVE_TODO, UPDATE_TODO, EDIT_TODO } from "./actionTypes";
 
 const initialState = {
-  todos: [],
+  todos: []
 };
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
-    case (ADD_TODO): {
+    case ADD_TODO: {
       return {
-        todos: [...state.todos, action.payload.todo],
+        todos: [...state.todos, { value: action.payload.todo }]
       };
     }
-    case (REMOVE_TODO): {
+    case EDIT_TODO: {
       return {
-        todos: state.todos.filter((val, index) => index !== action.payload.index),
+        todos: state.todos.map((todo, idx) => {
+          if (idx === action.payload.index) {
+            return {
+              ...todo,
+              isInEditMode: true
+            };
+          }
+          return todo;
+        })
       };
     }
-    case (EDIT_TODO): {
+    case REMOVE_TODO: {
+      return {
+        todos: state.todos.filter(
+          (val, index) => index !== action.payload.index
+        )
+      };
+    }
+    case UPDATE_TODO: {
       return {
         todos: state.todos.map((todo, index) => {
           if (index === action.payload.index) {
-            return action.payload.update;
+            return { value: action.payload.update };
           }
           return todo;
-        }),
+        })
       };
     }
     default:
