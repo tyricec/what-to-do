@@ -15,10 +15,10 @@ const Text = styled.div`
   padding: 8px;
 `;
 
-const Todo = ({ children }) => (
+const Todo = ({ children, onRemove }) => (
   <ListItem>
     <Text>{children}</Text>
-    <EditPanel />
+    <EditPanel onRemove={onRemove} />
   </ListItem>
 );
 

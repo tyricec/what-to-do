@@ -13,12 +13,12 @@ const EditButton = styled.button`
   border: none;
 `;
 
-const EditPanel = ({ className }) => (
+const EditPanel = ({ className, onRemove }) => (
   <Panel className={className}>
     <EditButton>
       <i className="fa fa-pencil-square-o" aria-hidden="true" />
     </EditButton>
-    <EditButton><i className="fa fa-trash-o" aria-hidden="true"></i></EditButton>
+    <EditButton onClick={onRemove}><i className="fa fa-trash-o" aria-hidden="true"></i></EditButton>
   </Panel>
 );
 

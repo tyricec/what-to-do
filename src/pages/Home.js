@@ -1,14 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
-
-import { addTodo } from "../todo/actions";
-import { getTodos } from "../todo/reducer";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import TodoInput from "../components/TodoInput/TodoInput";
-import TodoList from "../components/TodoList/TodoList";
+import TodoInput from "../containers/TodoInput";
+import TodoList from "../containers/TodoList";
 
 const Screen = styled.div`
   position: relative;
@@ -24,44 +20,15 @@ const StyledTodoInput = styled(TodoInput)`
   border-bottom: 1px solid #ececec;
 `;
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: ""
-    };
-  }
-
-  handleChange = event => {
-    console.log("here");
-    this.setState({ value: event.target.value });
-  };
-
-  submitTodo = () => {
-    console.log("here");
-    this.props.dispatch(addTodo(this.state.value));
-    this.setState({ value: "" });
-  };
-
-  render() {
-    return (
+const Home = () => (
       <Screen>
         <Header />
         <Container>
-          <StyledTodoInput
-            onTextChange={this.handleChange}
-            onAdd={this.submitTodo}
-            value={this.state.value}
-          />
-          <TodoList todos={this.props.todos} />
+          <StyledTodoInput />
+          <TodoList />
         </Container>
         <Footer />
       </Screen>
     );
-  }
-}
 
-export default connect(state => ({
-  todos: getTodos(state)
-}))(Home);
+export default Home;
