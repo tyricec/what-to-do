@@ -15,8 +15,11 @@ const EditButton = styled.button`
   border: none;
 `;
 
-const EditPanel = ({ className, onEdit, onRemove }) => (
+const EditPanel = ({ className, onCheck, onEdit, onRemove }) => (
   <Panel className={className}>
+    <EditButton onClick={onCheck}>
+      <i className="fa fa-check" aria-hidden="true" />
+    </EditButton>
     <EditButton onClick={onEdit}>
       <i className="fa fa-pencil-square-o" aria-hidden="true" />
     </EditButton>

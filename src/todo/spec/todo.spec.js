@@ -1,4 +1,10 @@
-import { addTodo, editTodo, removeTodo, updateTodo } from "../actions";
+import {
+  addTodo,
+  editTodo,
+  removeTodo,
+  updateTodo,
+  checkTodo
+} from "../actions";
 import todos, { getTodos } from "../reducer";
 
 describe("todo", () => {
@@ -17,9 +23,7 @@ describe("todo", () => {
     const action = removeTodo(0);
     const result = todos(state, action);
 
-    expect(result).toEqual({
-      todos: []
-    });
+    expect(result.todos).toEqual([]);
   });
 
   it("should be able to signal that a todo is in edit mode", () => {
@@ -28,26 +32,38 @@ describe("todo", () => {
 
     const result = todos(state, action);
 
-    expect(result).toEqual({
-      todos: [
-        {
-          value: "Some todo",
-          isInEditMode: true
-        }
-      ]
+    expect(result.todos[0]).toEqual({
+      value: "Some todo",
+      isInEditMode: true
     });
   });
 
   it("should be able to update a todo", () => {
-    const todo = "Something todo";
+    const todo = { value: "Something todo" };
     const updatedTodo = "Updated todo";
     const state = { todos: [todo] };
     const action = updateTodo(updatedTodo, 0);
     const result = todos(state, action);
 
-    expect(result).toEqual({
-      todos: [{ value: updatedTodo }]
-    });
+    expect(result.todos[0].value).toEqual(updatedTodo);
+  });
+
+  it("should be able to check off a todo", () => {
+    const todo = { value: "Something todo" };
+    const state = { todos: [todo] };
+    const action = checkTodo(0);
+    const result = todos(state, action);
+
+    expect(result.todos[0].checked).toBe(true);
+  });
+
+  it("should be able to remove check from todo", () => {
+    const todo = { checked: true, value: "Something todo" };
+    const state = { todos: [todo] };
+    const action = checkTodo(0);
+    const result = todos(state, action);
+
+    expect(result.todos[0].checked).toBe(false);
   });
 
   it("should be able to view all todos", () => {

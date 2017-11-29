@@ -15,22 +15,26 @@ const ListItem = styled.li`
 
 const Text = styled.div`
   padding: 8px;
+  text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
+  color: ${({ checked }) => (checked && "#398c3a") || "#000000"};
 `;
 
-const Todo = ({ children, onEdit, onRemove }) => (
+const Todo = ({ checked, children, onCheck, onEdit, onRemove }) => (
   <ListItem>
-    <Text>{children}</Text>
-    <EditPanel onEdit={onEdit} onRemove={onRemove} />
+    <Text checked={checked}>{children}</Text>
+    <EditPanel onCheck={onCheck} onEdit={onEdit} onRemove={onRemove} />
   </ListItem>
 );
 
 Todo.propTypes = {
   children: PropTypes.element.isRequired,
+  onCheck: PropTypes.func,
   onEdit: PropTypes.func,
   onRemove: PropTypes.func
 };
 
 Todo.defaultProps = {
+  onCheck: () => {},
   onEdit: () => {},
   onRemove: () => {}
 };

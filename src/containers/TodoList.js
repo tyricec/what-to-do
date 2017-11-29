@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { editTodo, removeTodo, updateTodo } from "../todo/actions";
+import { editTodo, removeTodo, updateTodo, checkTodo } from "../todo/actions";
 import { getTodos } from "../todo/reducer";
 import styled from "styled-components";
 
@@ -31,6 +31,8 @@ const TodoList = ({ dispatch, todos }) => (
         return (
           <Todo
             key={idx}
+            checked={todo.checked}
+            onCheck={() => dispatch(checkTodo(idx))}
             onEdit={() => dispatch(editTodo(idx))}
             onRemove={() => dispatch(removeTodo(idx))}
           >

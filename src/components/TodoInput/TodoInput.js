@@ -10,8 +10,13 @@ const Container = styled.form`
 `;
 
 const Input = styled.input`
+  border: none;
   margin: 8px 16px;
   width: 75%;
+
+  &:focus {
+    border-bottom: 1px solid #398c3a;
+  }
 `;
 
 const Button = styled.button`
@@ -31,8 +36,16 @@ class TodoInput extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.textInput.focus();
+  }
+
   onChange = evt => {
     this.setState({ value: evt.target.value });
+  };
+
+  onFocus = evt => {
+    evt.target.select();
   };
 
   onSubmit = evt => {
@@ -49,7 +62,9 @@ class TodoInput extends React.Component {
       <Container className={className} onSubmit={this.onSubmit}>
         <Input
           onChange={this.onChange}
+          onFocus={this.onFocus}
           placeholder={placeholder}
+          innerRef={input => (this.textInput = input)}
           value={this.state.value}
         />
         <Button>{buttonText}</Button>
