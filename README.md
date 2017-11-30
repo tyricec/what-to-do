@@ -2,7 +2,7 @@
 
 Another todo example app. Keeps track of the what to do.
 
-https://github.com/tyricec/what-to-do
+https://tyricec.github.io/what-to-do
 
 # Development
 
