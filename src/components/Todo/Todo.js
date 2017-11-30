@@ -6,7 +6,6 @@ import EditPanel from "./EditPanel/EditPanel";
 
 const ListItem = styled.li`
   border-bottom: 1px solid #ececec;
-  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
