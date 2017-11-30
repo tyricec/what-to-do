@@ -27,7 +27,7 @@ const Todo = ({ checked, children, onCheck, onEdit, onRemove }) => (
 );
 
 Todo.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   onCheck: PropTypes.func,
   onEdit: PropTypes.func,
   onRemove: PropTypes.func
