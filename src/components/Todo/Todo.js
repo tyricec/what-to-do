@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 
-import EditPanel from "./EditPanel/EditPanel";
+import EditPanel from "./EditPanel";
 
 const ListItem = styled.li`
   border-bottom: 1px solid #ececec;
