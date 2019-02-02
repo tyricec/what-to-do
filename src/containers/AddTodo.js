@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { addTodo } from "../todo/actions";
 
-import TodoInput from "../components/TodoInput/TodoInput";
+import TodoInput from "../components/TodoInput";
 
 const AddTodo = props => {
   const { className, dispatch } = props;

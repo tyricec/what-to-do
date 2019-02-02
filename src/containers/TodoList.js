@@ -5,8 +5,8 @@ import { editTodo, removeTodo, updateTodo, checkTodo } from "../todo/actions";
 import { getTodos } from "../todo/reducer";
 import styled from "styled-components";
 
-import Todo from "../components/Todo/Todo";
-import TodoInput from "../components/TodoInput/TodoInput";
+import Todo from "../components/Todo";
+import TodoInput from "../components/TodoInput";
 
 const List = styled.ul`
   background-color: #ffffff;
