@@ -4,7 +4,7 @@ import styled from "styled-components";
 const HeaderContainer = styled.header`
   background-color: #45ac4f;
   overflow: auto;
-  flexdirection: "column";
+  flex-direction: "column";
 `;
 
 const Title = styled.h1`
@@ -13,15 +13,23 @@ const Title = styled.h1`
   display: inline-block;
 `;
 
-const Header = () => (
-  <HeaderContainer>
-    <button class="hamburger hamburger--slider" type="button">
-      <span class="hamburger-box">
-        <span class="hamburger-inner" />
-      </span>
-    </button>
-    <Title>What Todo</Title>
-  </HeaderContainer>
-);
+class Header extends React.Component {
+  render() {
+    return (
+      <HeaderContainer>
+        <button
+          onClick={evt => this.props.onHamburgerButtonPress(evt)}
+          class="hamburger hamburger--slider"
+          type="button"
+        >
+          <span class="hamburger-box">
+            <span class="hamburger-inner" />
+          </span>
+        </button>
+        <Title>What Todo</Title>
+      </HeaderContainer>
+    );
+  }
+}
 
 export default Header;
