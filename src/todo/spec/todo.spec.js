@@ -10,72 +10,172 @@ import todos, { getTodos } from "../reducer";
 describe("todo", () => {
   it("should be able to add a todo", () => {
     const todo = "Something todo";
+    const state = undefined;
     const action = addTodo(todo);
-    const result = todos(undefined, action);
+    const result = getTodos(todos(state, action));
 
-    expect(result).toEqual({
-      todos: [{ value: todo }]
-    });
+    expect(result).toEqual([{ value: "Something todo", id: 0, list: 0 }]);
   });
 
   it("should be able to remove a todo", () => {
-    const state = { todos: [{ value: "Something todo" }] };
+    const state = {
+      todos: {
+        byId: {
+          0: {
+            value: "Something todo",
+            id: 0,
+            list: 0
+          },
+          1: {
+            value: "Another thing todo",
+            id: 1,
+            list: 0
+          }
+        }
+      }
+    };
     const action = removeTodo(0);
-    const result = todos(state, action);
+    const newState = todos(state, action);
+    const result = getTodos(newState);
 
-    expect(result.todos).toEqual([]);
+    expect(result).toEqual([
+      {
+        value: "Another thing todo",
+        id: 1,
+        list: 0
+      }
+    ]);
   });
 
   it("should be able to signal that a todo is in edit mode", () => {
-    const state = { todos: [{ value: "Some todo" }] };
+    const state = {
+      todos: {
+        byId: {
+          0: {
+            value: "Something todo",
+            id: 0,
+            list: 0,
+            checked: false
+          }
+        }
+      }
+    };
     const action = editTodo(0);
 
-    const result = todos(state, action);
+    const newState = todos(state, action);
+    const result = getTodos(newState);
 
-    expect(result.todos[0]).toEqual({
-      value: "Some todo",
-      isInEditMode: true
+    expect(result[0]).toEqual({
+      value: "Something todo",
+      isInEditMode: true,
+      checked: false,
+      id: 0,
+      list: 0
     });
   });
 
   it("should be able to update a todo", () => {
-    const todo = { value: "Something todo" };
     const updatedTodo = "Updated todo";
-    const state = { todos: [todo] };
+    const state = {
+      todos: {
+        byId: {
+          0: {
+            value: "Something todo",
+            id: 0,
+            list: 0,
+            checked: false
+          }
+        }
+      }
+    };
     const action = updateTodo(updatedTodo, 0);
-    const result = todos(state, action);
+    const newState = todos(state, action);
+    const result = getTodos(newState);
 
-    expect(result.todos[0].value).toEqual(updatedTodo);
+    expect(result[0].value).toEqual(updatedTodo);
+    expect(result[0].isInEditMode).toEqual(false);
   });
 
   it("should be able to check off a todo", () => {
-    const todo = { value: "Something todo" };
-    const state = { todos: [todo] };
+    const state = {
+      todos: {
+        byId: {
+          0: {
+            value: "Something todo",
+            id: 0,
+            list: 0,
+            checked: false
+          }
+        }
+      }
+    };
     const action = checkTodo(0);
-    const result = todos(state, action);
+    const newState = todos(state, action);
+    const result = getTodos(newState);
 
-    expect(result.todos[0].checked).toBe(true);
+    expect(result[0].checked).toBe(true);
   });
 
   it("should be able to remove check from todo", () => {
-    const todo = { checked: true, value: "Something todo" };
-    const state = { todos: [todo] };
+    const state = {
+      todos: {
+        byId: {
+          0: {
+            value: "Something todo",
+            id: 0,
+            list: 0,
+            checked: true
+          }
+        }
+      }
+    };
     const action = checkTodo(0);
-    const result = todos(state, action);
+    const newState = todos(state, action);
+    const result = getTodos(newState);
 
-    expect(result.todos[0].checked).toBe(false);
+    expect(result[0].checked).toBe(false);
   });
 
   it("should be able to view all todos", () => {
-    const todoList = [
-      { value: "A todo" },
-      { value: "Another todo" },
-      { value: "The last todo" }
-    ];
-    const state = { todos: todoList };
-
+    const state = {
+      todos: {
+        byId: {
+          0: {
+            value: "Something todo",
+            id: 0,
+            list: 0
+          },
+          1: {
+            value: "Another todo",
+            id: 1,
+            list: 0
+          },
+          2: {
+            value: "The last todo",
+            id: 2,
+            list: 0
+          }
+        }
+      }
+    };
     const result = getTodos(state);
 
-    expect(result).toEqual(todoList);
+    expect(result).toEqual([
+      {
+        value: "Something todo",
+        id: 0,
+        list: 0
+      },
+      {
+        value: "Another todo",
+        id: 1,
+        list: 0
+      },
+      {
+        value: "The last todo",
+        id: 2,
+        list: 0
+      }
+    ]);
   });
 });

@@ -23,7 +23,7 @@ const TodoList = ({ dispatch, todos }) => (
         if (todo.isInEditMode) {
           return (
             <TodoInput
-              onSubmit={update => dispatch(updateTodo(update, idx))}
+              onSubmit={update => dispatch(updateTodo(update, todo.id))}
               value={todo.value}
             />
           );
@@ -32,9 +32,9 @@ const TodoList = ({ dispatch, todos }) => (
           <Todo
             key={idx}
             checked={todo.checked}
-            onCheck={() => dispatch(checkTodo(idx))}
-            onEdit={() => dispatch(editTodo(idx))}
-            onRemove={() => dispatch(removeTodo(idx))}
+            onCheck={() => dispatch(checkTodo(todo.id))}
+            onEdit={() => dispatch(editTodo(todo.id))}
+            onRemove={() => dispatch(removeTodo(todo.id))}
           >
             {todo.value}
           </Todo>
